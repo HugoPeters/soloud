@@ -164,6 +164,7 @@ namespace SoLoud
 		bool mInsideAudioThreadMutex;
 		// Called by SoLoud to shut down the back-end. If NULL, not called. Should be set by back-end.
 		soloudCallFunction mBackendCleanupFunc;
+        soloudCallFunction mBackendIterateFunc;
 
 		// CTor
 		Soloud();
@@ -226,6 +227,8 @@ namespace SoLoud
 
 		// Deinitialize SoLoud. Must be called before shutting down.
 		void deinit();
+
+        void iterate();
 
 		// Query SoLoud version number (should equal to SOLOUD_VERSION macro)
 		unsigned int getVersion() const;

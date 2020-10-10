@@ -116,6 +116,7 @@ namespace SoLoud
 		mAudioThreadMutex = NULL;
 		mPostClipScaler = 0;
 		mBackendCleanupFunc = NULL;
+        mBackendIterateFunc = NULL;
 		mChannels = 2;		
 		mStreamTime = 0;
 		mLastClockedTime = 0;
@@ -194,12 +195,20 @@ namespace SoLoud
 		if (mBackendCleanupFunc)
 			mBackendCleanupFunc(this);
 		mBackendCleanupFunc = 0;
+        mBackendIterateFunc = 0;
 		if (mAudioThreadMutex)
 			Thread::destroyMutex(mAudioThreadMutex);
 		mAudioThreadMutex = NULL;
 	}
 
-	result Soloud::init(unsigned int aFlags, unsigned int aBackend, unsigned int aSamplerate, unsigned int aBufferSize, unsigned int aChannels)
+
+    void Soloud::iterate()
+    {
+        if (mBackendIterateFunc)
+            mBackendIterateFunc(this);
+    }
+
+    result Soloud::init(unsigned int aFlags, unsigned int aBackend, unsigned int aSamplerate, unsigned int aBufferSize, unsigned int aChannels)
 	{		
 		if (aBackend >= BACKEND_MAX || aChannels == 3 || aChannels == 5 || aChannels == 7 || aChannels > MAX_CHANNELS)
 			return INVALID_PARAMETER;

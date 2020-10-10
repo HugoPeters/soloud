@@ -38,14 +38,9 @@ namespace SoLoud
 }
 #else
 
-#ifdef __APPLE__
-#include "OpenAL/al.h"
-#include "OpenAL/alc.h"
-#else
-#include "AL/al.h"
-#include "AL/alc.h"
-#include "AL/alext.h"
-#endif
+#include "al.h"
+#include "alc.h"
+#include "alext.h"
 
 #define NUM_BUFFERS 2
 
@@ -119,7 +114,7 @@ namespace SoLoud
 		Thread::unlockMutex(mutex);
 	}
 #endif
-	static void openal_iterate(SoLoud::Soloud *aSoloud)
+	void openal_iterate(SoLoud::Soloud *aSoloud)
 	{
 		ALuint buffer = 0;
 		ALint buffersProcessed = 0;
@@ -142,16 +137,6 @@ namespace SoLoud
 			dll_al_SourcePlay(source);
 	}
 
-	static void openal_thread(void *aParam)
-	{
-		Soloud *soloud = (Soloud *)aParam;
-		while (threadrun == 0)
-		{
-			openal_iterate(soloud);
-			Thread::sleep(1);
-		}
-		threadrun++;
-	}
 
 	result openal_init(SoLoud::Soloud *aSoloud, unsigned int aFlags, unsigned int aSamplerate, unsigned int aBuffer, unsigned int /*aChannels*/)
 	{
@@ -160,6 +145,7 @@ namespace SoLoud
 
 		aSoloud->postinit_internal(aSamplerate,aBuffer,aFlags,2);
 		aSoloud->mBackendCleanupFunc = soloud_openal_deinit;
+        aSoloud->mBackendIterateFunc = openal_iterate;
 
 		device = dll_alc_OpenDevice(NULL);
 		context = dll_alc_CreateContext(device, NULL);
@@ -185,8 +171,6 @@ namespace SoLoud
 		}
 
 		dll_al_SourcePlay(source);
-
-		Thread::createThread(openal_thread, (void*)aSoloud);
 
         aSoloud->mBackendString = "OpenAL";
 		return 0;

@@ -48,6 +48,7 @@ namespace SoLoud
 			return INVALID_PARAMETER;
         aSoloud->mBackendData = 0;
         aSoloud->mBackendCleanupFunc = nullCleanup;
+        aSoloud->mBackendIterateFunc = NULL;
 
         aSoloud->postinit_internal(aSamplerate, aBuffer, aFlags, aChannels);
         aSoloud->mBackendString = "null driver";

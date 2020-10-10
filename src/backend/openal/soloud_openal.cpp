@@ -78,12 +78,6 @@ namespace SoLoud
 {
 	void soloud_openal_deinit(SoLoud::Soloud * /*aSoloud*/)
 	{
-		threadrun++;
-		while (threadrun == 1)
-		{
-			Thread::sleep(10);
-		}
-
 		dll_al_SourceStop(source);
 		dll_al_DeleteSources(1, &source);
 		dll_al_DeleteBuffers(NUM_BUFFERS, buffers);

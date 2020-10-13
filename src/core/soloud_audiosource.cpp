@@ -207,7 +207,8 @@ namespace SoLoud
 
 	AudioSource::~AudioSource() 
 	{
-		stop();
+        if ((mFlags & UNMANAGED) == 0)
+		    stop();
 	}
 
 	void AudioSource::setVolume(float aVolume)

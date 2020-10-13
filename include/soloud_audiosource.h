@@ -225,7 +225,9 @@ namespace SoLoud
 			// If inaudible, should still be ticked (default = pause)
 			INAUDIBLE_TICK = 128,
 			// Disable auto-stop
-			DISABLE_AUTOSTOP = 256
+			DISABLE_AUTOSTOP = 256,
+            // Don't stop the audio when the original source is destroyed
+            UNMANAGED = 512
 		};
 		enum ATTENUATION_MODELS
 		{

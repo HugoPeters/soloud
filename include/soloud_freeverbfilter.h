@@ -49,6 +49,7 @@ namespace SoLoud
 		FreeverbImpl::Revmodel *mModel;
 	public:
 		virtual void filter(float* aBuffer, unsigned int aSamples, unsigned int aBufferSize, unsigned int aChannels, float aSamplerate, time aTime);
+        void applyParams();
 		virtual ~FreeverbFilterInstance();
 		FreeverbFilterInstance(FreeverbFilter *aParent);
 	};

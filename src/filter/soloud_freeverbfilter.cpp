@@ -473,6 +473,7 @@ namespace SoLoud
 		mParam[DAMP] = aParent->mDamp;
 		mParam[WIDTH] = aParent->mWidth;
 		mParam[WET] = 1;
+        applyParams();
 	}
 
 	void FreeverbFilterInstance::filter(float* aBuffer, unsigned int aSamples, unsigned int aBufferSize, unsigned int aChannels, float aSamplerate, time aTime)
@@ -480,18 +481,23 @@ namespace SoLoud
 		SOLOUD_ASSERT(aChannels == 2); // Only stereo supported at this time
 		if (mParamChanged)
 		{
-			mModel->setdamp(mParam[DAMP]);
-			mModel->setmode(mParam[FREEZE]);
-			mModel->setroomsize(mParam[ROOMSIZE]);
-			mModel->setwidth(mParam[WIDTH]);
-			mModel->setwet(mParam[WET]);
-			mModel->setdry(1 - mParam[WET]);
+            applyParams();
 			mParamChanged = 0;
 		}
 		mModel->process(aBuffer, aSamples, aBufferSize);
 	}
 
-	FreeverbFilterInstance::~FreeverbFilterInstance()
+    void FreeverbFilterInstance::applyParams()
+    {
+        mModel->setdamp(mParam[DAMP]);
+        mModel->setmode(mParam[FREEZE]);
+        mModel->setroomsize(mParam[ROOMSIZE]);
+        mModel->setwidth(mParam[WIDTH]);
+        mModel->setwet(mParam[WET]);
+        mModel->setdry(1 - mParam[WET]);
+    }
+
+    FreeverbFilterInstance::~FreeverbFilterInstance()
 	{
 		delete mModel;
 	}

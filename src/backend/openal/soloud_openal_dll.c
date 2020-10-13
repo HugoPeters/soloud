@@ -36,15 +36,16 @@ freely, subject to the following restrictions:
 
 #ifdef SOLOUD_STATIC_OPENAL
 
+#ifdef __cplusplus
 extern "C"
 {
-
+#endif
 // statically linked OpenAL
 int dll_al_found() { return 1; }
 ALCdevice* dll_alc_OpenDevice(const ALCchar *devicename) { return alcOpenDevice(devicename); }
 void dll_alc_CloseDevice(ALCdevice *device) { alcCloseDevice(device); }
 ALCcontext* dll_alc_CreateContext(ALCdevice *device, const ALCint* attrlist) { return alcCreateContext(device, attrlist); }
-void dll_alc_DestroyContext(ALCcontext *context) { return alcDestroyContext(context); }
+void dll_alc_DestroyContext(ALCcontext *context) { alcDestroyContext(context); }
 ALCboolean dll_alc_MakeContextCurrent(ALCcontext *context) { return alcMakeContextCurrent(context); }
 void dll_al_GetSourcei(ALuint source, ALenum param, ALint *value) { alGetSourcei(source, param, value); }
 void dll_al_SourceQueueBuffers(ALuint source, ALsizei nb, const ALuint *buffers) { alSourceQueueBuffers(source, nb, buffers); }
@@ -56,8 +57,9 @@ void dll_al_GenBuffers(ALsizei n, ALuint *buffers) { alGenBuffers(n, buffers); }
 void dll_al_DeleteBuffers(ALsizei n, ALuint *buffers) { alDeleteBuffers(n, buffers); }
 void dll_al_GenSources(ALsizei n, ALuint *sources) { alGenSources(n, sources); }
 void dll_al_DeleteSources(ALsizei n, ALuint *sources) { alDeleteSources(n, sources); }
-
+#ifdef __cplusplus
 }
+#endif
 
 #else
 

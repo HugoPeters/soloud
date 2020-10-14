@@ -472,7 +472,7 @@ namespace SoLoud
 		mParam[ROOMSIZE] = aParent->mRoomSize;
 		mParam[DAMP] = aParent->mDamp;
 		mParam[WIDTH] = aParent->mWidth;
-		mParam[WET] = 1;
+		mParam[WET] = aParent->mWetness;
         applyParams();
 	}
 
@@ -504,14 +504,15 @@ namespace SoLoud
 
 	FreeverbFilter::FreeverbFilter()
 	{
-		setParams(0, 0.5, 0.5, 1);
+		setParams(1, 0, 0.5, 0.5, 1);
 	}
 
-	result FreeverbFilter::setParams(float aFreeze, float aRoomSize, float aDamp, float aWidth)
+	result FreeverbFilter::setParams(float aWetness, float aFreeze, float aRoomSize, float aDamp, float aWidth)
 	{
-		if (aFreeze < 0 || aFreeze > 1 || aRoomSize <= 0 || aDamp < 0 || aWidth <= 0)
+		if (aWetness < 0 || aWetness > 1 || aFreeze < 0 || aFreeze > 1 || aRoomSize <= 0 || aDamp < 0 || aWidth <= 0)
 			return INVALID_PARAMETER;
 
+        mWetness = aWetness;
 		mMode = aFreeze;
 		mRoomSize = aRoomSize;
 		mDamp = aDamp;

@@ -70,13 +70,14 @@ namespace SoLoud
 		virtual float getParamMax(unsigned int aParamIndex);
 		virtual float getParamMin(unsigned int aParamIndex);
 
+        float mWetness;
 		float mMode;
 		float mRoomSize;
 		float mDamp;
 		float mWidth;
 		virtual FreeverbFilterInstance *createInstance();
 		FreeverbFilter();
-		result setParams(float aMode, float aRoomSize, float aDamp, float aWidth);
+		result setParams(float aWetness, float aMode, float aRoomSize, float aDamp, float aWidth);
 		virtual ~FreeverbFilter();
 	};
 }

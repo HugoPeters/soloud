@@ -244,16 +244,18 @@ namespace SoLoud
 		magPhase2MagFreq(aFFTBuffer, aSamples, aSamplerate, aChannel);
 		
 		float t[STFT_WINDOW_TWICE];
-		memcpy(t, aFFTBuffer, sizeof(float) * aSamples);
-		memset(aFFTBuffer, 0, sizeof(float) * aSamples * 2);
+		memcpy(t, aFFTBuffer, sizeof(float) * aSamples * 2);
+        memset(aFFTBuffer, 0, sizeof(float) * aSamples * 2);
 
-		for (unsigned int i = 0; i < aSamples / 4; i++)
+        const float shift = 1.f;
+
+		for (unsigned int i = 0; i < aSamples; i++)
 		{
-			unsigned int d = i * 2;
-			if (d < aSamples / 4)
+			unsigned int d = i;
+			//if (d < aSamples)
 			{
 				aFFTBuffer[d * 2] += t[i * 2];
-				aFFTBuffer[d * 2 + 1] = t[i * 2 + 1] * 2;
+				aFFTBuffer[d * 2 + 1] = t[i * 2 + 1] + 2000.f;
 			}
 		}
 

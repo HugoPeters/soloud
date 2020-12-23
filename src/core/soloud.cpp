@@ -461,7 +461,7 @@ namespace SoLoud
 			(aBackend == Soloud::OPENAL ||
 			aBackend == Soloud::AUTO))
 		{
-			if (aBufferSize == Soloud::AUTO) buffersize = 4096;
+			if (aBufferSize == Soloud::AUTO) buffersize = 2048;
 
 			int ret = openal_init(this, aFlags, samplerate, buffersize, aChannels);
 			if (ret == 0)
